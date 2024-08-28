@@ -11,6 +11,12 @@ struct Particle
     float3 position;
 };
 
+StructuredBuffer<float3> _tubeVertices;
+StructuredBuffer<int> _tubeTriangles;
+
+int tubeVertexCount;
+int tubeTriangleCount;
+
 RWStructuredBuffer<Particle> _particles;
 
 float particleMass = 2.0;
@@ -182,3 +188,21 @@ void Integrate (uint3 id: SV_DISPATCHTHREADID)
     
     _particles[id.x].velocity = vel;
 }
+
+
+// [numthreads(256, 1, 1)]
+// void ComputeForces(uint3 id : SV_DispatchThreadID)
+// {
+//     // Existing force computation code
+
+//     // Add collision detection with the tube
+//     for (int i = 0; i < tubeTriangleCount / 3; i++)
+//     {
+//         float3 v0 = _tubeVertices[_tubeTriangles[i * 3]];
+//         float3 v1 = _tubeVertices[_tubeTriangles[i * 3 + 1]];
+//         float3 v2 = _tubeVertices[_tubeTriangles[i * 3 + 2]];
+
+//         // Perform collision detection and response here
+//     }
+// }
+
